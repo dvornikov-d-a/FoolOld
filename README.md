@@ -1,0 +1,1 @@
+This is the card game named "Fool" for 2 players or for playing with AI.
