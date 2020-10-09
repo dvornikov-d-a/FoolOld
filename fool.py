@@ -4,12 +4,12 @@ from collections import defaultdict
 
 import config as c
 from game import Game
-from button import Button
+from game_objects.button import Button
 
-from deck import Deck
-from player import Player
-from table import Table
-from hand import Hand
+from game_objects.deck import Deck
+from game_objects.player import Player
+from game_objects.table import Table
+from game_objects.hand import Hand
 
 
 class Fool(Game):

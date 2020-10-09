@@ -18,10 +18,10 @@ class Card(GameObject):
         self.long_hover = False
         self.hover_timer = Timer()
 
-        image_path = 'images/cards/'+self.suit+'/'+self.nominal+'.png'
+        image_path = 'source/images/cards/'+self.suit+'/' + self.nominal+'.png'
         image = pygame.image.load(image_path)
         self.image = pygame.transform.scale(image, (w, h))
-        flop_path = 'images/cards/flop.png'
+        flop_path = 'source/images/cards/flop.png'
         flop = pygame.image.load(flop_path)
         self.flop = pygame.transform.scale(flop, (w, h))
 

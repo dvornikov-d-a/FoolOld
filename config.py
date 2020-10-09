@@ -11,11 +11,11 @@ screen_height = 720
 frame_rate = 90
 
 default_background = colors.GRAY
-menu_background = pygame.image.load('images/menu_background.jpg')
-game_background = pygame.image.load('images/game_background.jpg')
-icon = pygame.image.load('images/game_icon.png')
-flop = pygame.image.load('images/cards/flop.png')
-flop_90 = pygame.image.load('images/cards/flop_90.png')
+menu_background = pygame.image.load('source/images/menu_background.jpg')
+game_background = pygame.image.load('source/images/game_background.jpg')
+icon = pygame.image.load('source/images/game_icon.png')
+flop = pygame.image.load('source/images/cards/flop.png')
+flop_90 = pygame.image.load('source/images/cards/flop_90.png')
 
 button_text_color = colors.WHITESMOKE
 button_normal_back_color = colors.BLACK

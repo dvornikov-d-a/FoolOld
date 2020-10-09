@@ -6,9 +6,13 @@ from game_objects.card import Card
 from game_objects.game_object import GameObject
 
 
+# Колода карт
 class Deck(GameObject):
     def __init__(self):
-        GameObject.__init__(self, c.screen_width - c.card_h // 2, c.screen_height // 2 - c.card_w // 2, c.card_h, c.card_w)
+        GameObject.__init__(self,
+                            c.screen_width - c.card_h // 2,
+                            c.screen_height // 2 - c.card_w // 2,
+                            c.card_h, c.card_w)
         self.image = pygame.transform.scale(c.flop_90, (self.width, self.height))
 
         self.cards = []
