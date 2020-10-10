@@ -20,7 +20,7 @@ class Game:
         self.objects = []
 
         pygame.mixer.pre_init(44100, 16, 2, 4096)
-        pygame.init() # pylint тупит
+        pygame.init()
         pygame.font.init()
 
         self.surface = pygame.display.set_mode((width, height))
@@ -32,7 +32,8 @@ class Game:
 
         self.keydown_handlers = defaultdict(list)
         self.keyup_handlers = defaultdict(list)
-        self.mouse_handlers = []
+        self.mouse_motion_handlers = []
+        self.mouse_button_handlers = []
 
     def update(self):
         for o in self.objects:
@@ -54,10 +55,12 @@ class Game:
                 for handler in self.keyup_handlers[event.key]:
                     handler(event.key)
             elif event.type in (pygame.MOUSEBUTTONDOWN,
-                                pygame.MOUSEBUTTONUP,
-                                pygame.MOUSEMOTION):
-                for handler in self.mouse_handlers:
-                    handler(event.type, event.pos)
+                                pygame.MOUSEBUTTONUP):
+                for handler in self.mouse_button_handlers:
+                    handler(event.button, event.type, event.pos)
+            elif event.type == pygame.MOUSEMOTION:
+                for handler in self.mouse_motion_handlers:
+                    handler(event.pos)
 
     def run(self):
         while self.running:

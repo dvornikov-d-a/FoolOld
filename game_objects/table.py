@@ -12,6 +12,10 @@ class Table(GameObject):
         self.user_pool = []
         self.bot_pool = []
 
+    # ToDo
+    # Изменить логику обработки событий мыши:
+    # разделить нажатия кнопок и движение
+
     def settle(self):
         pass
 

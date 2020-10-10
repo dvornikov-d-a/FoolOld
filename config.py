@@ -8,7 +8,7 @@ nominals = ('6', '7', '8', '9', '10', 'jack', 'queen', 'king', 'ace')
 screen_width = 1280
 screen_height = 720
 
-frame_rate = 90
+frame_rate = 100
 
 default_background = colors.GRAY
 menu_background = pygame.image.load('source/images/menu_background.jpg')

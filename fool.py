@@ -34,7 +34,8 @@ class Fool(Game):
         self.objects = []
         self.keydown_handlers = defaultdict(list)
         self.keyup_handlers = defaultdict(list)
-        self.mouse_handlers = []
+        self.mouse_button_handlers = []
+        self.mouse_motion_handlers = []
 
     def create_small_menu(self):
         pass
@@ -62,7 +63,8 @@ class Fool(Game):
                        click_handler,
                        padding=5)
             self.objects.append(b)
-            self.mouse_handlers.append(b.handle_mouse_event)
+            self.mouse_button_handlers.append(b.handle_mouse_button_event)
+            self.mouse_motion_handlers.append(b.handle_mouse_motion)
 
     def create_game(self, mode='algo'):
         self.background_image = c.game_background
@@ -72,54 +74,59 @@ class Fool(Game):
         self.bot = Player(Hand(self.deck.give_cards(), False), False)
 
         self.objects.append(self.deck)
-        for card in self.user.hand:
-            self.objects.append(card)
-        for card in self.bot.hand:
-            self.objects.append(card)
+        self.objects.append(self.user.hand)
+        self.objects.append(self.bot.hand)
+        # for card in self.user.hand:
+        #     self.objects.append(card)
+        # for card in self.bot.hand:
+        #     self.objects.append(card)
 
         if self.user_attack:
+            self.mouse_motion_handlers.append(self.user.hand.handle_mouse_motion)
+            self.mouse_button_handlers.append(self.user.hand.handle_mouse_button_event)
             for card in self.user.hand:
-                self.mouse_handlers.append(card.handle_mouse_event)
+                self.mouse_button_handlers.append(card.handle_button_mouse_event)
+                self.mouse_motion_handlers.append(card.handle_mouse_motion)
 
-    def handle_mouse_event(self, type, pos):
-        if type == pygame.MOUSEMOTION:
-            self.handle_mouse_move(pos)
-        elif type == pygame.MOUSEBUTTONUP:
-            self.handle_mouse_up(pos)
-        elif type == pygame.MOUSEBUTTONDOWN:
-            self.handle_mouse_down(pos)
-
-    def handle_mouse_move(self, pos):
-        if len(self.selected_cards) != 0:
-            if self.selected_nominal_has_more_twins():
-                pass
-
-
-    def handle_mouse_up(self, pos):
-        if len(self.selected_cards) != 0:
-            if self.user.hand.bounds.collidepoint(pos):
-                self.user.hand.settle()
-            elif self.table.bounds.collidepoint(pos):
-
-                self.table.settle()
-
-    def handle_mouse_down(self, pos):
-        for card in self.user.hand:
-            if card.state == 'selected':
-                self.selected_cards.append(card)
-                break
-
-    def selected_nominal_has_more_twins(self):
-        selected_nominal = self.selected_cards[0].nominal
-        selected_count = len(self.selected_cards)
-        nominal_twin_count = 0
-        for card in self.user.hand:
-            if card.nominal == selected_nominal:
-                nominal_twin_count += 1
-        if nominal_twin_count > selected_count:
-            return True
-        else:
-            return False
+#
+    # def handle_mouse_event(self, type, pos):
+    #     if type == pygame.MOUSEMOTION:
+    #         self.handle_mouse_move(pos)
+    #     elif type == pygame.MOUSEBUTTONUP:
+    #         self.handle_mouse_up(pos)
+    #     elif type == pygame.MOUSEBUTTONDOWN:
+    #         self.handle_mouse_down(pos)
+#
+    # def handle_mouse_move(self, pos):
+    #     if len(self.selected_cards) != 0:
+    #         if self.selected_nominal_has_more_twins():
+    #             pass
+#
+    # def handle_mouse_up(self, pos):
+    #     if len(self.selected_cards) != 0:
+    #         if self.user.hand.bounds.collidepoint(pos):
+    #             self.user.hand.settle()
+    #         elif self.table.bounds.collidepoint(pos):
+#
+    #             self.table.settle()
+#
+    # def handle_mouse_down(self, pos):
+    #     for card in self.user.hand:
+    #         if card.state == 'selected':
+    #             self.selected_cards.append(card)
+    #             break
+#
+    # def selected_nominal_has_more_twins(self):
+    #     selected_nominal = self.selected_cards[0].nominal
+    #     selected_count = len(self.selected_cards)
+    #     nominal_twin_count = 0
+    #     for card in self.user.hand:
+    #         if card.nominal == selected_nominal:
+    #             nominal_twin_count += 1
+    #     if nominal_twin_count > selected_count:
+    #         return True
+    #     else:
+    #         return False
         
     
 def main():

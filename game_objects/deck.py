@@ -32,6 +32,10 @@ class Deck(GameObject):
                 card = Card(0, 0, c.card_w, c.card_h, suit, nominal)
                 self.cards.append(card)
 
+    # ToDo
+    # Изменить логику обработки событий мыши:
+    # разделить нажатия кнопок и движение
+
     def shuffle(self):
         random.shuffle(self.cards)
 

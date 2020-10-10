@@ -15,8 +15,8 @@ class Card(GameObject):
         self.suit = suit
         self.nominal = nominal
 
-        self.long_hover = False
-        self.hover_timer = Timer()
+        # self.long_hover = False
+        # self.hover_timer = Timer()
 
         image_path = 'source/images/cards/'+self.suit+'/' + self.nominal+'.png'
         image = pygame.image.load(image_path)
@@ -31,6 +31,9 @@ class Card(GameObject):
     def show(self):
         self.hidden = False
 
+    def in_bounds(self, pos):
+        return self.bounds.collidepoint(pos)
+
     def draw(self, surface):
         if self.hidden:
             surface.blit(self.flop, (self.left, self.top))
@@ -38,43 +41,47 @@ class Card(GameObject):
             surface.blit(self.image, (self.left, self.top))
 
     def update(self):
-        if self.state == 'hover':
-            if self.hover_timer.is_ringing:
-                self.long_hover = True
-                self.hover_timer.reset()
-            elif self.hover_timer.is_on:
-                pass
-            elif not self.long_hover:
-                self.hover_timer.run(c.long_hover_sec)
-        else:
-            self.long_hover = False
-            self.hover_timer.reset()
+        # if self.state == 'hover':
+        #     if self.hover_timer.is_ringing:
+        #         self.long_hover = True
+        #         self.hover_timer.reset()
+        #     elif self.hover_timer.is_on:
+        #         pass
+        #     elif not self.long_hover:
+        #         self.hover_timer.run(c.long_hover_sec)
+        # else:
+        #     self.long_hover = False
+        #     self.hover_timer.reset()
 
         dx = self.dest_point[0] - self.cur_point[0]
         dy = self.dest_point[1] - self.cur_point[1]
         self.move(dx, dy)
         self.cur_point = self.dest_point
 
-    def handle_mouse_event(self, type, pos):
-        if type == pygame.MOUSEMOTION:
-            self.handle_mouse_move(pos)
-        elif type == pygame.MOUSEBUTTONDOWN:
-            self.handle_mouse_down(pos)
+    def handle_button_mouse_event(self, button, type, pos):
+        if type == pygame.MOUSEBUTTONDOWN:
+            self.handle_mouse_down(button, pos)
         elif type == pygame.MOUSEBUTTONUP:
-            self.handle_mouse_up(pos)
+            self.handle_mouse_up(button, pos)
 
-    def handle_mouse_move(self, pos):
+    def handle_mouse_motion(self, pos):
         if self.state == 'selected':
             self.dest_point = pos
-        elif self.bounds.collidepoint(pos):
-            self.state = 'hover'
+        # elif self.bounds.collidepoint(pos):
+        #     self.state = 'hover'
 
-    def handle_mouse_down(self, pos):
-        if self.bounds.collidepoint(pos):
-            self.state = 'selected'
-            self.cur_point = pos
-            self.dest_point = pos
+    # ToDo
+    # Передать контроль состояния (hover, selected) Карты Руке
+    def handle_mouse_down(self, button, pos):
+        if button == 1:
+            if self.bounds.collidepoint(pos):
+                if self.state == 'hover':
+                    self.state = 'selected'
+                    self.cur_point = pos
+                    self.dest_point = pos
 
-    def handle_mouse_up(self, pos):
-        if self.state == 'selected':
-            self.state = 'hover'
+    def handle_mouse_up(self, button, pos):
+        if button == 1:
+            if self.bounds.collidepoint(pos):
+                if self.state == 'selected':
+                    self.state = 'hover'
