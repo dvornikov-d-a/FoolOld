@@ -94,15 +94,16 @@ class Hand(GameObject):
 
         # Нет выделенных карт
         if self.card_focused_on is None:
-            # Выделить первую
-            card_to_focus_on = collided_cards[0]
+            # Выделить последнюю отображённую Карту, т.е. ту, что "лежит" поверх других, ведь
+            # Карты хранятся в Руке в порядке их отображения.
+            card_to_focus_on = collided_cards.pop()
         # Есть выделенная карта
         else:
             # Ещё конфликтует за фокус?
             still_collided = collided_cards.__contains__(self.card_focused_on)
             if not still_collided:
-                # Больше не претендует на фокус - выделить первую
-                card_to_focus_on = collided_cards[0]
+                # Больше не претендует на фокус - выделить последнюю
+                card_to_focus_on = collided_cards.pop()
             else:
                 # Ещё конфликтует
                 # Индекс выделенной карты в списке конфликтующих

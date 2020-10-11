@@ -16,6 +16,7 @@ game_background = pygame.image.load('source/images/game_background.jpg')
 icon = pygame.image.load('source/images/game_icon.png')
 flop = pygame.image.load('source/images/cards/flop.png')
 flop_90 = pygame.image.load('source/images/cards/flop_90.png')
+hover_bounds = pygame.image.load('source/images/cards/hover_bounds.png')
 
 button_text_color = colors.WHITESMOKE
 button_normal_back_color = colors.BLACK
@@ -30,8 +31,8 @@ main_menu_offset_y = 20
 main_menu_button_w = 300
 main_menu_button_h = 50
 
-card_w = 94
-card_h = 129
+card_w = 372 // 3
+card_h = 516 // 3
 
 hand_offset_x = 10
 hand_offset_y = 10

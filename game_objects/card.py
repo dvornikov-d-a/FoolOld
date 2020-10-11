@@ -18,12 +18,21 @@ class Card(GameObject):
         # self.long_hover = False
         # self.hover_timer = Timer()
 
-        image_path = 'source/images/cards/'+self.suit+'/' + self.nominal+'.png'
+        image_path = 'source/images/cards/' + self.suit+'/' + self.nominal + '.png'
         image = pygame.image.load(image_path)
-        self.image = pygame.transform.scale(image, (w, h))
-        flop_path = 'source/images/cards/flop.png'
-        flop = pygame.image.load(flop_path)
-        self.flop = pygame.transform.scale(flop, (w, h))
+        self.image = pygame.transform.smoothscale(image, (w, h))
+        # flop_path = 'source/images/cards/flop.png'
+        # flop = pygame.image.load(flop_path)
+        self.flop = pygame.transform.smoothscale(c.flop, (w, h))
+        self.hover_bounds = pygame.transform.smoothscale(c.hover_bounds, (w, h))
+
+
+    @ property
+    def focused(self):
+        if self.state == 'hover' or self.state == 'selected':
+            return True
+        else:
+            return False
 
     def hide(self):
         self.hidden = True
@@ -39,6 +48,8 @@ class Card(GameObject):
             surface.blit(self.flop, (self.left, self.top))
         else:
             surface.blit(self.image, (self.left, self.top))
+            if self.focused:
+                surface.blit(self.hover_bounds, (self.left, self.top))
 
     def update(self):
         # if self.state == 'hover':
